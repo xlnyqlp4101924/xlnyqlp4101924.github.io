@@ -1,98 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>账号分享Apple ID</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css.css">
-    <link rel="stylesheet" href="css1.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/styles.min.css">
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="./assets/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="./assets/css/css2.css" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
-<body id="page-top">
-    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top">账号分享</a>
+<body class="bg-gradient">
+    <!-- 加载动画 -->
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+        <div class="progress-wrapper">
+            <div class="progress-bar"></div>
         </div>
+        <div class="loading-text">加载中... <span class="progress-text">0%</span></div>
+    </div>
 
-    </nav>
-    <header class="text-center text-white bg-primary masthead"
-        style="background: rgb(255,255,255);filter: brightness(100%);padding-top: 0;padding-bottom: 0;">
-        <section class="features-boxed" style="background: rgb(238, 244, 247);">
+    <!-- 包裹整个页面内容 -->
+    <div class="page-content">
+        <!-- 导航栏 -->
+        <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container">
-                <div class="intro">
-                    <h2 class="text-center" style="font-size: 37px;margin:30px auto 10px;">Apple ID分享</h2>
-                    <p class="text-center" style="font-size: 14px;">账号密码24小时自动更新，刷新网页即可获取最新密码</p>
-                    <p style="color: #e03e2d;font-weight: 700;margin-top: 30px;">
-                        注意：不要用此账号登入iCloud，锁机后果自负，<br>下载完请立即退出，以免账号被锁影响他人使用，谢谢配合！
-                    </p>
-                    <p style="color: #FF0099;font-weight: 700;margin-top: 30px;">
-                        如登录时出现双重认证界面，请点击界面下方<br> "其他选项" - "不升级"
-                    </p>
-                    <p style="margin-top: 10px;"><a target="_blank"
-                            href="https://qm.qq.com/cgi-bin/qm/qr?k=7WguTo-fB1It4Pqaq24Zhn_QIoQYRHjI&amp;jump_from=webapi"><img
-                                border="0" src="https://pub.idqqimg.com/wpa/images/group.png"
-                                data-lazy-src="https://pub.idqqimg.com/wpa/images/group.png" alt="魔法咖" title="魔法咖"
-                                data-ll-status="loaded" class="entered loaded"></a></p>
-                    <h2 class="text-center" style="font-size: 20px;margin: 16px;margin-top: 3px;">以下内容来自互联网，请勿相信广告。</h2>
-                </div>
-                <hr>
-				<h2><a href="/2.html">👉安装APP教程、常见问题👈️</a></h2>
-<!---table -->
-	<table>
-        <tr>
-            <th><b>共享账号①</b></th>
-            <td><a href="https://appi.lol/" style="display:block;"
-                    target="_blank">点击前往</a></td>
-        </tr>
-        <tr>
-            <th><b>共享账号②</b></th>
-            <td><a href="https://idshare001.me/goso.html" style="display:block;"
-                    target="_blank">点击前往</a></td>
-        </tr>
-		        <tr>
-            <th><b>共享账号③</b></th>
-            <td><a href="https://free.dabai.in/free#id" style="display:block;"
-                    target="_blank">点击前往</a></td>
-        </tr>
-		<tr>
-            <th><b>共享账号④</b></th>
-            <td><a href="https://usa.xiaohuojian2022.com/share/888" style="display:block;"
-                    target="_blank">点击前往</a></td>
-        </tr>
-		<tr>
-            <th><b>共享账号⑤</b></th>
-            <td><a href="https://ccbaohe.com/appleID/" style="display:block;"
-                    target="_blank">点击前往</a></td>
-        </tr>
-		<tr>
-            <th><b>共享账号⑥</b></th>
-            <td><a href="https://ccbaohe.com/appleID2/" style="display:block;"
-                    target="_blank">点击前往</a></td>
-        </tr>
-		<tr>
-            <th><b>共享账号⑦</b></th>
-            <td><a href="https://free.iosapp.icu/" style="display:block;"
-                    target="_blank">点击前往</a></td>
-        </tr>
-		<tr>
-            <th><b>共享账号⑧</b></th>
-            <td><a href="http://apple.iosshop.xyz/" style="display:block;"
-                    target="_blank">点击前往</a></td>
-        </tr>
-		
-	    <table>
-        <tr>
-            <th style="background-color: pink; font-weight: 700; color: #ffffff;"><span id="busuanzi_container_site_pv">本站总访问量 <span id="busuanzi_value_site_pv"></span> 次</span></th>
-        </tr>
-        
-    </table>
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heart"></i>
+                    <span>Apple ID分享</span>
+                </a>
+            </div>
+        </nav>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
+        <!-- 主要内容区 -->
+        <main class="container main-container">
+            <section class="content-section">
+                <h1 class="text-center main-title">Apple ID分享</h1>
+
+                <!-- 警告提示 -->
+                <div class="alert alert-warning" role="alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>注意：</strong>不要用此账号登入iCloud，锁机后果自负。下载完请立即退出，以免账号被锁影响他人使用。
+                </div>
+
+                <!-- 在alert-info警告框后添加QQ联系信息 -->
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    如登录时出现双重认证界面，请点击界面下方"其他选项" - "不升级"
+                </div>
+
+                <!-- 添加QQ联系信息 -->
+                <div class="alert alert-primary contact-info" role="alert">
+                    <i class="fab fa-qq"></i>
+                    <strong>联系QQ：</strong>
+                    <a href="tencent://message/?uin=1287766992&Site=&Menu=yes" class="qq-link">1287766992</a>
+                </div>
+
+                <!-- 教程按钮 -->
+                <div class="text-center tutorial-btn">
+                    <a href="/jiaocheng.html" class="btn btn-lg btn-pink">
+                        <i class="fas fa-book-open me-2"></i>
+                        安装APP教程、常见问题
+                    </a>
+                </div>
+
+                <!-- 分享账号表格 -->
+                <div class="table-container">
+                    <table class="share-table">
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号①</th>
+                            <td>
+                                <a href="https://appi.lol/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号②</th>
+                            <td>
+                                <a href="https://idshare001.me/goso.html" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号③</th>
+                            <td>
+                                <a href="https://ccbaohe.com/appleID/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号④</th>
+                            <td>
+                                <a href="https://ccbaohe.com/appleID2/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号⑤</th>
+                            <td>
+                                <a href="https://free.iosapp.icu/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号⑥</th>
+                            <td>
+                                <a href="https://apple.iosshop.xyz/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="visit-count">
+                <span id="busuanzi_container_site_pv">
+                    <i class="fas fa-eye me-2"></i>
+                    总访问量 <span id="busuanzi_value_site_pv"></span> 次
+                </span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript 依赖 -->
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/gsap.min.js"></script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
 
 </html>
