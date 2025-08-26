@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>账号分享Apple ID</title>
+    <title>账号分享Apple ID - 密码验证</title>
 
     <!-- Bootstrap CSS -->
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
@@ -14,6 +14,97 @@
     <link href="./assets/css/css2.css" rel="stylesheet">
     <!-- 自定义样式 -->
     <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        .password-form {
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin: 2rem auto;
+        }
+
+        .qr-code {
+            max-width: 300px; /* 增大图片尺寸 */
+            border-radius: 10px;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease;
+        }
+        
+        .qr-code:hover {
+            transform: scale(1.05);
+        }
+
+        .password-input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 美化密码输入框 */
+        .fancy-input-group .input-group-text {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-light);
+            border-right: none;
+            border-radius: 15px 0 0 15px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .fancy-input-group .form-control {
+            border: 2px solid var(--primary-light);
+            border-left: none;
+            border-radius: 0 15px 15px 0;
+            padding: 0.75rem 1rem;
+            font-size: 1.1rem;
+            box-shadow: none;
+            transition: all 0.3s ease;
+            background-color: var(--white);
+        }
+        
+        .fancy-input-group .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 141, 171, 0.25);
+            border-color: var(--primary);
+        }
+        
+        .fancy-input-group .form-control:focus + .input-group-text {
+            border-color: var(--primary);
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @keyframes shake {
+            10%, 90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+            20%, 80% {
+                transform: translate3d(2px, 0, 0);
+            }
+            30%, 50%, 70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+            40%, 60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+
+        .success-message {
+            color: #28a745;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-weight: 600;
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="bg-gradient">
@@ -41,98 +132,47 @@
         <!-- 主要内容区 -->
         <main class="container main-container">
             <section class="content-section">
-                <h1 class="text-center main-title">Apple ID分享</h1>
+                <h1 class="text-center main-title">访问验证</h1>
 
-                <!-- 警告提示 -->
-                <div class="alert alert-warning" role="alert">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <strong>注意：</strong>请在AppStore里登录共享账号，不要在设置内登录，否则锁机后果自负！下载完请及时退出，以免影响他人使用账号。
-                </div>
-
-                <!-- 在alert-info警告框后添加QQ联系信息 -->
-                <div class="alert alert-info" role="alert">
+                <!-- 欢迎信息 -->
+                <div class="alert alert-primary" role="alert">
                     <i class="fas fa-info-circle"></i>
-                    如登录时出现双重认证界面，请点击界面下方"其他选项" - "不升级"
+                    <strong>欢迎访问：</strong>请输入密码访问Apple ID共享网站
                 </div>
 
-                <!-- 添加QQ联系信息 -->
-                <div class="alert alert-primary contact-info" role="alert">
-                    <i class="fab fa-qq"></i>
-                    <strong>联系QQ：</strong>
-                    <a href="tencent://message/?uin=1287766992&Site=&Menu=yes" class="qq-link">1287766992</a>
+                <!-- QR码区域 -->
+                <div class="qr-container">
+                    <img src="dy.jpg" alt="抖音群二维码" class="qr-code">
+                    <p class="mt-3">扫描二维码加入抖音群，在群公告中获取访问密码</p>
                 </div>
 
-                <!-- 教程按钮 -->
-                <div class="text-center tutorial-btn">
-                    <a href="/jiaocheng.html" class="btn btn-lg btn-pink">
-                        <i class="fas fa-book-open me-2"></i>
-                        安装APP教程、常见问题
-                    </a>
-                </div>
-
-                <!-- 分享账号表格 -->
-                <div class="table-container">
-                    <table class="share-table">
-                        <tr>
-                            <th><i class="fas fa-user me-2"></i>共享账号①</th>
-                            <td>
-                                <a href="https://appi.lol/" target="_blank">
-                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><i class="fas fa-user me-2"></i>共享账号②</th>
-                            <td>
-                                <a href="https://idshare001.me/goso.html" target="_blank">
-                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><i class="fas fa-user me-2"></i>共享账号③</th>
-                            <td>
-                                <a href="https://ccbaohe.com/appleID/" target="_blank">
-                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><i class="fas fa-user me-2"></i>共享账号④</th>
-                            <td>
-                                <a href="https://ccbaohe.com/appleID2/" target="_blank">
-                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><i class="fas fa-user me-2"></i>共享账号⑤</th>
-                            <td>
-                                <a href="https://free.iosapp.icu/" target="_blank">
-                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><i class="fas fa-user me-2"></i>共享账号⑥</th>
-                            <td>
-                                <a href="https://ids.ailiao.eu/" target="_blank">
-                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
+                <!-- 密码表单 -->
+                <div class="password-form">
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-key"></i>
+                        请输入从抖音群公告获取的密码
+                    </div>
+                    
+                    <div class="password-input-group">
+                        <div class="input-group fancy-input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" id="password-input" class="form-control" placeholder="请输入密码">
+                        </div>
+                        <small class="error-message" id="error-message">密码错误，请重试</small>
+                        <small class="success-message" id="success-message">密码正确，正在进入...</small>
+                    </div>
+                    
+                    <button id="submit-password" class="btn btn-pink btn-lg w-100">
+                        <i class="fas fa-sign-in-alt me-2"></i> 验证并进入
+                    </button>
                 </div>
             </section>
         </main>
 
-        <!-- 页脚 -->
+        <!-- 页脚 - 已移除访问量显示 -->
         <footer class="footer">
-            <div class="visit-count">
-                <span id="busuanzi_container_site_pv">
-                    <i class="fas fa-eye me-2"></i>
-                    总访问量 <span id="busuanzi_value_site_pv"></span> 次
-                </span>
+            <div class="text-center text-muted">
+                <small>&copy; 2024 Apple ID分享</small>
             </div>
         </footer>
     </div>
@@ -140,8 +180,186 @@
     <!-- JavaScript 依赖 -->
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/gsap.min.js"></script>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <script src="./assets/js/main.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 页面加载完成后的处理
+            window.addEventListener('load', () => {
+                const loaderWrapper = document.querySelector('.loader-wrapper');
+                const pageContent = document.querySelector('.page-content');
+                const progressBar = document.querySelector('.progress-bar');
+                const progressText = document.querySelector('.progress-text');
+
+                // 模拟加载进度
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 30;
+                    if (progress > 100) progress = 100;
+
+                    progressBar.style.width = `${progress}%`;
+                    progressText.textContent = `${Math.round(progress)}%`;
+
+                    if (progress === 100) {
+                        clearInterval(interval);
+                        // 等待进度条到达100%后再淡出
+                        setTimeout(() => {
+                            loaderWrapper.classList.add('fade-out');
+                            pageContent.classList.add('fade-in');
+
+                            // 加载动画完全消失后再执行其他动画
+                            setTimeout(() => {
+                                // 导航栏动画
+                                gsap.from('.navbar', {
+                                    y: -50,
+                                    opacity: 0,
+                                    duration: 1,
+                                    ease: 'power3.out'
+                                });
+
+                                // 内容区动画
+                                gsap.from('.content-section', {
+                                    y: 50,
+                                    opacity: 0,
+                                    duration: 1,
+                                    delay: 0.3,
+                                    ease: 'power3.out'
+                                });
+
+                                // QR码动画
+                                gsap.from('.qr-container', {
+                                    scale: 0.8,
+                                    opacity: 0,
+                                    duration: 1,
+                                    delay: 0.6,
+                                    ease: 'back.out(1.7)'
+                                });
+
+                                // 表单动画
+                                gsap.from('.password-form', {
+                                    y: 30,
+                                    opacity: 0,
+                                    duration: 1,
+                                    delay: 0.8,
+                                    ease: 'power3.out'
+                                });
+                            }, 500);
+                        }, 200);
+                    }
+                }, 100);
+            });
+
+            // 密码验证逻辑
+            const passwordInput = document.getElementById('password-input');
+            const submitButton = document.getElementById('submit-password');
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+            const correctPassword = "1871"; // 设置密码
+
+            // 检查localStorage中是否有密码验证通过的记录
+            if (localStorage.getItem('passwordVerified') === 'true') {
+                window.location.href = 'main.html';
+            }
+
+            // 提交按钮点击事件
+            submitButton.addEventListener('click', verifyPassword);
+
+            // 密码输入框回车事件
+            passwordInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    verifyPassword();
+                }
+            });
+
+            function verifyPassword() {
+                const inputPassword = passwordInput.value;
+                
+                if (inputPassword === correctPassword) {
+                    // 密码正确
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    passwordInput.classList.remove('is-invalid');
+                    passwordInput.classList.add('is-valid');
+                    
+                    // 在localStorage中记录密码验证通过
+                    localStorage.setItem('passwordVerified', 'true');
+                    
+                    // 设置过期时间（24小时）
+                    const expireTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+                    localStorage.setItem('passwordExpireTime', expireTime);
+                    
+                    // 延迟跳转，显示成功信息
+                    setTimeout(() => {
+                        window.location.href = 'main.html';
+                    }, 1500);
+                } else {
+                    // 密码错误
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    passwordInput.classList.add('is-invalid');
+                    
+                    // 添加抖动效果
+                    passwordInput.classList.add('shake');
+                    setTimeout(() => {
+                        passwordInput.classList.remove('shake');
+                    }, 500);
+                }
+            }
+
+            // 链接悬停动画
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    gsap.to(link, {
+                        scale: 1.05,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+
+                link.addEventListener('mouseleave', () => {
+                    gsap.to(link, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+            
+            // 按钮悬停效果
+            submitButton.addEventListener('mouseenter', () => {
+                gsap.to(submitButton, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+
+            submitButton.addEventListener('mouseleave', () => {
+                gsap.to(submitButton, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // 检查密码验证是否过期
+        function checkPasswordExpiration() {
+            const expireTime = localStorage.getItem('passwordExpireTime');
+            
+            if (expireTime) {
+                const currentTime = new Date().getTime();
+                
+                // 如果当前时间超过过期时间，清除密码验证状态
+                if (currentTime > parseInt(expireTime)) {
+                    localStorage.removeItem('passwordVerified');
+                    localStorage.removeItem('passwordExpireTime');
+                }
+            }
+        }
+
+        // 在页面加载时检查密码是否过期
+        checkPasswordExpiration();
+    </script>
 </body>
 
 </html>

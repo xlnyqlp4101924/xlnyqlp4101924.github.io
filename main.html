@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>账号分享Apple ID</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="./assets/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="./assets/css/css2.css" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body class="bg-gradient">
+    <!-- 加载动画 -->
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+        <div class="progress-wrapper">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="loading-text">加载中... <span class="progress-text">0%</span></div>
+    </div>
+
+    <!-- 包裹整个页面内容 -->
+    <div class="page-content">
+        <!-- 导航栏 -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heart"></i>
+                    <span>Apple ID分享</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- 主要内容区 -->
+        <main class="container main-container">
+            <section class="content-section">
+                <h1 class="text-center main-title">Apple ID分享</h1>
+
+                <!-- 警告提示 -->
+                <div class="alert alert-warning" role="alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>注意：</strong>请在AppStore里登录共享账号，不要在设置内登录，否则锁机后果自负！下载完请及时退出，以免影响他人使用账号。
+                </div>
+
+                <!-- 在alert-info警告框后添加QQ联系信息 -->
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    如登录时出现双重认证界面，请点击界面下方"其他选项" - "不升级"
+                </div>
+
+                <!-- 添加QQ联系信息 -->
+                <div class="alert alert-primary contact-info" role="alert">
+                    <i class="fab fa-qq"></i>
+                    <strong>联系QQ：</strong>
+                    <a href="tencent://message/?uin=1287766992&Site=&Menu=yes" class="qq-link">1287766992</a>
+                </div>
+
+                <!-- 教程按钮 -->
+                <div class="text-center tutorial-btn">
+                    <a href="/jiaocheng.html" class="btn btn-lg btn-pink">
+                        <i class="fas fa-book-open me-2"></i>
+                        安装APP教程、常见问题
+                    </a>
+                </div>
+
+                <!-- 分享账号表格 -->
+                <div class="table-container">
+                    <table class="share-table">
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号①</th>
+                            <td>
+                                <a href="https://appi.lol/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号②</th>
+                            <td>
+                                <a href="https://idshare001.me/goso.html" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号③</th>
+                            <td>
+                                <a href="https://ccbaohe.com/appleID/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号④</th>
+                            <td>
+                                <a href="https://ccbaohe.com/appleID2/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号⑤</th>
+                            <td>
+                                <a href="https://free.iosapp.icu/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fas fa-user me-2"></i>共享账号⑥</th>
+                            <td>
+                                <a href="https://ids.ailiao.eu/" target="_blank">
+                                    点击前往 <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="visit-count">
+                <span id="busuanzi_container_site_pv">
+                    <i class="fas fa-eye me-2"></i>
+                    总访问量 <span id="busuanzi_value_site_pv"></span> 次
+                </span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript 依赖 -->
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/gsap.min.js"></script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script>
+        // 验证用户是否已通过密码验证
+        document.addEventListener('DOMContentLoaded', () => {
+            // 检查密码验证是否过期
+            function checkPasswordExpiration() {
+                const expireTime = localStorage.getItem('passwordExpireTime');
+                
+                if (expireTime) {
+                    const currentTime = new Date().getTime();
+                    
+                    // 如果当前时间超过过期时间，清除密码验证状态
+                    if (currentTime > parseInt(expireTime)) {
+                        localStorage.removeItem('passwordVerified');
+                        localStorage.removeItem('passwordExpireTime');
+                    }
+                }
+            }
+
+            // 检查密码验证
+            checkPasswordExpiration();
+            
+            // 如果用户未通过密码验证，重定向到主页
+            if (localStorage.getItem('passwordVerified') !== 'true') {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+
+</html>
