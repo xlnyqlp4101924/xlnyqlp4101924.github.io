@@ -8,6 +8,91 @@
     />
     <title>Apple ID 免费分享</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- 1. 关键修改：把加载动画的样式直接写在这里，防止白屏 -->
+    <style>
+      /* 初始化 body，加载时禁止滚动 */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background: #f0f2f5;
+        overflow: hidden;
+      }
+
+      /* 加载遮罩 - 保证层级最高 */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #f0f2f5;
+        z-index: 99999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.6s ease, visibility 0.6s ease;
+      }
+
+      /* 隐藏时的类 */
+      #loading-screen.fade-out {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader-content {
+        text-align: center;
+        width: 200px;
+      }
+
+      /* 旋转圆圈 */
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(118, 75, 162, 0.2);
+        border-top: 4px solid #764ba2;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        animation: spin 1s linear infinite;
+      }
+
+      .loader-content p {
+        color: #718096;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+
+      /* 进度条背景 */
+      .progress-bar-bg {
+        width: 100%;
+        height: 6px;
+        background: #e2e8f0;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* 进度条填充 */
+      .progress-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.2s ease;
+        border-radius: 10px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- 外部资源放在后面加载 -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -19,11 +104,11 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- 加载动画 -->
+    <!-- 加载动画结构 -->
     <div id="loading-screen">
       <div class="loader-content">
         <div class="spinner"></div>
-        <p>资源加载中...</p>
+        <p>资源加载中... <span id="percent-text">0%</span></p>
         <div class="progress-bar-bg">
           <div id="progress-bar" class="progress-bar-fill"></div>
         </div>
@@ -36,7 +121,7 @@
       <div class="blob blob-2"></div>
     </div>
 
-    <!-- 登录界面 (保持不变) -->
+    <!-- 登录界面 -->
     <section id="login-section" class="active-section">
       <div class="glass-card login-card">
         <div class="login-header">
@@ -112,7 +197,6 @@
               </div>
               <span>新手教程 & QA</span>
             </button>
-            <!-- 修改点 2: QQ 链接，增加 fallback 机制 -->
             <a
               href="http://wpa.qq.com/msgrd?v=3&uin=1287766992&site=qq&menu=yes"
               target="_blank"
@@ -129,7 +213,6 @@
         <!-- 账号列表区域 -->
         <h3 class="section-title fade-in-up delay-2">可用账号</h3>
         <div class="grid-container">
-          <!-- 修改点 3: 删除了 <p> 描述标签 -->
           <div class="app-card glass-card fade-in-up delay-2">
             <div class="app-icon icon-blue">
               <i class="fas fa-user-astronaut"></i>
@@ -240,7 +323,6 @@
       </div>
     </section>
 
-    <!-- 弹窗部分保持不变，代码略，直接复制上一版即可 -->
     <!-- 弹窗：二维码 -->
     <div id="qr-modal" class="modal">
       <div class="modal-content glass-card">
