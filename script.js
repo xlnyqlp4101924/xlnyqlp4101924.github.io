@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 2. 配置与密码逻辑 (保持在 DOMContentLoaded 内) ---
   const CONFIG = {
     // 密码: 123456
-    PASSWORD_B64: "MDg3MQ==",
+    PASSWORD_B64: "NDAxNw==",
     AUTH_KEY: "appleid_share_auth_v1",
     EXPIRE_HOURS: 24,
   };
