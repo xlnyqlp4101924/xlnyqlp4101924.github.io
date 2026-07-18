@@ -1,55 +1,52 @@
-// --- 1. 资源加载动画逻辑 (立即执行，不等页面加载完) ---
 (function initLoader() {
   const loadingScreen = document.getElementById("loading-screen");
   const progressBar = document.getElementById("progress-bar");
   const percentText = document.getElementById("percent-text");
 
-  // 如果找不到元素（极少情况），直接跳过
   if (!loadingScreen || !progressBar) return;
 
-  let width = 0;
+  let width = 12;
+  progressBar.style.width = `${width}%`;
+  if (percentText) percentText.innerText = `${width}%`;
 
-  // 启动定时器，模拟加载
   const interval = setInterval(() => {
-    // 如果页面还没加载完，进度条最多跑到 90%
-    if (width < 90) {
-      // 随机增加一点进度
-      width += Math.random() * 5;
-      if (width > 90) width = 90;
+    if (width < 100) {
+      let increment = Math.random() * 3;
+      if (width > 60) increment = Math.random() * 1;
+      if (width > 82) increment = Math.random() * 0.35;
 
-      progressBar.style.width = width + "%";
-      if (percentText) percentText.innerText = Math.floor(width) + "%";
+      width += increment;
+      if (width >= 95 && !window.pageLoaded) width = 95;
+
+      const displayWidth = Math.min(width, 99);
+      progressBar.style.width = `${displayWidth}%`;
+      if (percentText) percentText.innerText = `${Math.floor(displayWidth)}%`;
+      return;
     }
-  }, 50); // 每50ms更新一次
 
-  // 监听真正的页面加载完成事件 (图片、样式都好了)
-  window.addEventListener("load", () => {
     clearInterval(interval);
-
-    // 直接拉满到 100%
     progressBar.style.width = "100%";
     if (percentText) percentText.innerText = "100%";
 
-    // 稍微停顿一下，让用户看到 100%，然后消失
     setTimeout(() => {
-      loadingScreen.classList.add("fade-out"); // 使用 CSS 类来渐隐
-
-      // 恢复页面滚动
+      loadingScreen.classList.add("fade-out");
       document.body.style.overflow = "auto";
 
-      // 动画结束后彻底移除，释放内存
       setTimeout(() => {
         loadingScreen.style.display = "none";
-      }, 600); // 对应 CSS transition 时间
-    }, 200);
+      }, 500);
+    }, 180);
+  }, 28);
+
+  window.addEventListener("load", () => {
+    window.pageLoaded = true;
+    width = 100;
   });
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 2. 配置与密码逻辑 (保持在 DOMContentLoaded 内) ---
   const CONFIG = {
-    // 密码: 123456
-    PASSWORD_B64: "NjgyNw==",
+    PASSWORD_B64: "NzgwNg==",
     AUTH_KEY: "appleid_share_auth_v1",
     EXPIRE_HOURS: 24,
   };
@@ -59,8 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordInput = document.getElementById("password-input");
   const loginBtn = document.getElementById("login-btn");
   const errorMsg = document.getElementById("error-msg");
+  let lastFocusedElement = null;
 
-  // 检查登录
   checkLogin();
 
   function checkLogin() {
@@ -68,12 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (authData) {
       try {
         const { timestamp } = JSON.parse(authData);
-        const now = new Date().getTime();
-        if (now - timestamp < CONFIG.EXPIRE_HOURS * 60 * 60 * 1000) {
+        if (Date.now() - timestamp < CONFIG.EXPIRE_HOURS * 60 * 60 * 1000) {
           showMain();
           return;
         }
-      } catch (e) {
+      } catch (error) {
         localStorage.removeItem(CONFIG.AUTH_KEY);
       }
     }
@@ -81,31 +77,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleLogin() {
+    if (!passwordInput || !errorMsg) return;
+
     const inputPwd = passwordInput.value.trim();
-    // 简单混淆比对
     if (btoa(inputPwd) === CONFIG.PASSWORD_B64) {
-      const data = { timestamp: new Date().getTime() };
-      localStorage.setItem(CONFIG.AUTH_KEY, JSON.stringify(data));
+      localStorage.setItem(CONFIG.AUTH_KEY, JSON.stringify({ timestamp: Date.now() }));
       errorMsg.style.display = "none";
       showMain();
-    } else {
-      errorMsg.style.display = "block";
-      passwordInput.classList.add("shake");
-      setTimeout(() => passwordInput.classList.remove("shake"), 500);
+      return;
     }
+
+    errorMsg.style.display = "block";
+    passwordInput.classList.add("shake");
+    setTimeout(() => passwordInput.classList.remove("shake"), 500);
   }
 
-  if (loginBtn) {
-    loginBtn.addEventListener("click", handleLogin);
-  }
-
+  if (loginBtn) loginBtn.addEventListener("click", handleLogin);
   if (passwordInput) {
-    passwordInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") handleLogin();
+    passwordInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") handleLogin();
     });
-    // 输入框获得焦点时隐藏错误
     passwordInput.addEventListener("input", () => {
-      errorMsg.style.display = "none";
+      if (errorMsg) errorMsg.style.display = "none";
     });
   }
 
@@ -126,29 +119,22 @@ document.addEventListener("DOMContentLoaded", () => {
     loginSection.classList.add("active-section");
   }
 
-  window.logout = function () {
-    if (confirm("确定要退出登录吗？")) {
-      localStorage.removeItem(CONFIG.AUTH_KEY);
-      if (passwordInput) passwordInput.value = "";
-      showLogin();
-    }
+  window.logout = function logout() {
+    localStorage.removeItem(CONFIG.AUTH_KEY);
+    if (passwordInput) passwordInput.value = "";
+    showLogin();
   };
 
-  // --- 3. 复制功能 ---
-  window.copyText = function (text) {
-    // 优先使用新版 API
+  window.copyText = function copyText(text) {
     if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          showToast("复制成功！");
-        })
-        .catch(() => {
-          fallbackCopy(text);
-        });
-    } else {
-      fallbackCopy(text);
+      navigator.clipboard.writeText(text).then(
+        () => showToast("复制成功"),
+        () => fallbackCopy(text)
+      );
+      return;
     }
+
+    fallbackCopy(text);
   };
 
   function fallbackCopy(text) {
@@ -160,12 +146,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
+
     try {
       document.execCommand("copy");
-      showToast("复制成功！");
-    } catch (err) {
+      showToast("复制成功");
+    } catch (error) {
       showToast("复制失败，请手动复制");
     }
+
     document.body.removeChild(textArea);
   }
 
@@ -177,37 +165,61 @@ document.addEventListener("DOMContentLoaded", () => {
     toastMsg.textContent = msg;
     toast.classList.add("show");
 
-    // 清除之前的定时器防止闪烁
     if (window.toastTimer) clearTimeout(window.toastTimer);
-
     window.toastTimer = setTimeout(() => {
       toast.classList.remove("show");
     }, 2000);
   }
 
-  // --- 4. 弹窗控制 (通用) ---
-  window.toggleModal = function (modalId) {
+  window.toggleModal = function toggleModal(modalId) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
-
-    const style = window.getComputedStyle(modal);
-    if (style.display === "flex") {
-      modal.style.display = "none";
-    } else {
-      modal.style.display = "flex";
+    const shouldClose = window.getComputedStyle(modal).display === "flex";
+    if (shouldClose) {
+      closeModal(modal);
+      return;
     }
+
+    openModal(modal);
   };
 
-  // 专门打开教程
-  window.openTutorial = function () {
+  window.openTutorial = function openTutorial() {
     const modal = document.getElementById("tutorial-modal");
-    if (modal) modal.style.display = "flex";
+    if (modal) openModal(modal);
   };
 
-  // 点击空白关闭弹窗
-  window.addEventListener("click", function (event) {
-    if (event.target.classList.contains("modal")) {
-      event.target.style.display = "none";
+  function openModal(modal) {
+    lastFocusedElement = document.activeElement;
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+
+    const closeButton = modal.querySelector(".close-modal");
+    if (closeButton) closeButton.focus();
+  }
+
+  function closeModal(modal) {
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+
+    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+      lastFocusedElement.focus();
     }
+  }
+
+  function closeModalOnOutside(event) {
+    if (event.target.classList.contains("modal")) {
+      closeModal(event.target);
+      event.preventDefault();
+    }
+  }
+
+  window.addEventListener("click", closeModalOnOutside);
+  window.addEventListener("touchend", closeModalOnOutside);
+  window.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    const openModalElement = [...document.querySelectorAll(".modal")].find(
+      (modal) => window.getComputedStyle(modal).display === "flex"
+    );
+    if (openModalElement) closeModal(openModalElement);
   });
 });

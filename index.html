@@ -8,193 +8,213 @@
     />
     <title>Apple ID 免费分享</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-
-    <!-- 1. 关键修改：把加载动画的样式直接写在这里，防止白屏 -->
     <style>
-      /* 初始化 body，加载时禁止滚动 */
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-        background: #f0f2f5;
-        overflow: hidden;
+      :root {
+        --color-page: #f7faf9;
+        --color-brand: #18a77b;
+        --color-brand-soft: #d8ece6;
+        --color-muted: #60756d;
       }
 
-      /* 加载遮罩 - 保证层级最高 */
+      body {
+        overflow: hidden;
+        margin: 0;
+        background: var(--color-page);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
       #loading-screen {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #f0f2f5;
+        inset: 0;
         z-index: 99999;
         display: flex;
-        justify-content: center;
         align-items: center;
-        transition: opacity 0.6s ease, visibility 0.6s ease;
+        justify-content: center;
+        background: var(--color-page);
+        transition: opacity 0.45s ease, visibility 0.45s ease;
       }
 
-      /* 隐藏时的类 */
       #loading-screen.fade-out {
         opacity: 0;
         visibility: hidden;
+        pointer-events: none;
       }
 
       .loader-content {
+        width: min(260px, 70vw);
         text-align: center;
-        width: 200px;
       }
 
-      /* 旋转圆圈 */
       .spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(118, 75, 162, 0.2);
-        border-top: 4px solid #764ba2;
+        width: 44px;
+        height: 44px;
+        margin: 0 auto 18px;
+        border: 3px solid var(--color-brand-soft);
+        border-top-color: var(--color-brand);
         border-radius: 50%;
-        margin: 0 auto 20px;
-        animation: spin 1s linear infinite;
+        animation: spin 0.8s linear infinite;
       }
 
       .loader-content p {
-        color: #718096;
-        font-size: 0.9rem;
-        margin-bottom: 10px;
+        margin: 0 0 14px;
+        color: var(--color-muted);
+        font-size: 14px;
+        font-weight: 600;
       }
 
-      /* 进度条背景 */
       .progress-bar-bg {
-        width: 100%;
         height: 6px;
-        background: #e2e8f0;
-        border-radius: 10px;
         overflow: hidden;
-        position: relative;
+        background: #e2eee9;
+        border-radius: 999px;
       }
 
-      /* 进度条填充 */
       .progress-bar-fill {
-        height: 100%;
         width: 0%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        transition: width 0.2s ease;
-        border-radius: 10px;
+        height: 100%;
+        background: linear-gradient(90deg, var(--color-brand), #55b7f3);
+        border-radius: 999px;
+        transition: width 0.12s linear;
       }
 
       @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
+        to {
           transform: rotate(360deg);
         }
       }
-    </style>
 
-    <!-- 外部资源放在后面加载 -->
+      @media (prefers-reduced-motion: reduce) {
+        .spinner {
+          animation: none;
+        }
+      }
+    </style>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Poppins:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Inter:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- 加载动画结构 -->
     <div id="loading-screen">
       <div class="loader-content">
         <div class="spinner"></div>
-        <p>资源加载中... <span id="percent-text">0%</span></p>
+        <p>正在加载资源 <span id="percent-text">0%</span></p>
         <div class="progress-bar-bg">
           <div id="progress-bar" class="progress-bar-fill"></div>
         </div>
       </div>
     </div>
 
-    <!-- 背景装饰 -->
-    <div class="bg-decoration">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-    </div>
-
-    <!-- 登录界面 -->
-    <section id="login-section" class="active-section">
-      <div class="glass-card login-card">
-        <div class="login-header">
-          <div class="logo-icon"><i class="fab fa-apple"></i></div>
-          <h1>访问验证</h1>
-          <p>Apple ID Share</p>
-        </div>
-        <div class="login-form">
-          <div class="input-group">
-            <i class="fas fa-lock"></i>
-            <input
-              type="password"
-              id="password-input"
-              placeholder="请输入群公告密码"
-              maxlength="20"
-            />
+    <section id="login-section" class="active-section auth-shell">
+      <div class="auth-panel">
+        <div class="auth-copy">
+          <span class="eyebrow">Apple ID Share</span>
+          <h1>Apple ID 免费分享</h1>
+          <p>登录后查看可用共享账号入口。请务必只在 App Store 登录，不要登录 iCloud 设置。</p>
+          <div class="auth-points">
+            <span><i class="fas fa-store"></i> App Store 专用</span>
+            <span><i class="fas fa-shield-heart"></i> 风险提醒</span>
+            <span><i class="fas fa-mobile-screen-button"></i> 手机友好</span>
           </div>
-          <button id="login-btn" class="btn-primary">
-            <span>立即进入</span>
-            <i class="fas fa-arrow-right"></i>
-          </button>
-          <p id="error-msg" class="error-text">密码错误，请重试</p>
         </div>
-        <div class="qrcode-mini">
-          <p>还没有密码？</p>
-          <div class="qr-trigger" onclick="toggleModal('qr-modal')">
-            <i class="fab fa-tiktok"></i> 扫码加群获取
+
+        <div class="card login-card">
+          <div class="login-header">
+            <div class="logo-mark"><i class="fab fa-apple"></i></div>
+            <h2>访问验证</h2>
+            <p>输入群公告密码继续访问</p>
+          </div>
+
+          <div class="login-form">
+            <label class="field-label" for="password-input">访问密码</label>
+            <div class="input-group">
+              <i class="fas fa-lock"></i>
+              <input
+                type="password"
+                id="password-input"
+                placeholder="请输入访问密码"
+                maxlength="20"
+                autocomplete="current-password"
+              />
+            </div>
+            <button id="login-btn" class="btn-primary">
+              <span>立即进入</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <p id="error-msg" class="error-text">密码错误，请重试</p>
+          </div>
+
+          <div class="qrcode-mini">
+            <span>还没有密码？</span>
+            <button type="button" class="text-link" onclick="toggleModal('qr-modal')">
+              扫码加群获取
+            </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 主界面 -->
-    <section id="main-section" class="hidden-section">
-      <nav class="navbar glass-nav">
-        <div class="nav-brand">
-          <i class="fab fa-apple"></i>
+    <section id="main-section" class="hidden-section page-shell">
+      <nav class="navbar">
+        <a class="nav-brand" href="#">
+          <span class="brand-dot"><i class="fab fa-apple"></i></span>
           <span>ID Share</span>
-        </div>
-        <button onclick="logout()" class="logout-btn">
-          <i class="fas fa-sign-out-alt"></i>
+        </a>
+        <button onclick="logout()" class="icon-btn" aria-label="退出登录" title="退出登录">
+          <i class="fas fa-right-from-bracket"></i>
         </button>
       </nav>
 
-      <div class="container">
-        <!-- 顶部公告卡片 -->
-        <div class="hero-card glass-card fade-in-up">
-          <div class="status-badge">
-            <i class="fas fa-check-circle"></i> 状态正常
+      <main class="container">
+        <section class="hero-section fade-in-up">
+          <div class="hero-content">
+            <div class="status-badge">
+              <i class="fas fa-circle-check"></i>
+              状态正常
+            </div>
+            <h1>共享账号中心</h1>
+            <p class="hero-desc">
+              选择可用入口获取 Apple ID。请先阅读安全提醒，避免错误登录导致设备风险。
+            </p>
           </div>
-          <h2>共享账号列表</h2>
-
-          <!-- 1. 黄色警告：严禁登录 iCloud -->
-          <div class="highlight-warning">
-            <i class="fas fa-exclamation-triangle"></i>
-            <div>严禁登录 iCloud (设置)，只能在 AppStore 登录！</div>
+          <div class="hero-meta danger-meta">
+            <div>
+              <span>重要规则</span>
+              <strong>只在 App Store 登录</strong>
+            </div>
           </div>
+        </section>
 
-          <!-- 2. 红色提醒：后果自负 -->
-          <div class="notice-box notice-red">
-            <i class="fas fa-skull-crossbones"></i>
-            <span>如果在设置里登录导致锁机，后果自负！请务必阅读教程。</span>
+        <section class="warning-layout fade-in-up delay-1" aria-label="安全提醒">
+          <div class="warning-card warning-primary">
+            <i class="fas fa-triangle-exclamation"></i>
+            <div>
+              <h2>严禁登录 iCloud 设置</h2>
+              <p>共享账号只能用于 App Store 下载应用，不要在系统设置里登录。</p>
+            </div>
           </div>
-        </div>
+          <div class="warning-card warning-danger">
+            <i class="fas fa-circle-exclamation"></i>
+            <div>
+              <h2>错误登录可能锁机</h2>
+              <p>如果在设置里登录导致锁机，后果自负。使用前建议先查看教程。</p>
+            </div>
+          </div>
+        </section>
 
-        <!-- 功能按钮区 -->
-        <div class="action-grid fade-in-up delay-1">
-          <h3 class="section-title">快捷服务</h3>
+        <section class="section-block fade-in-up delay-2">
+          <div class="section-head">
+            <h2>快捷服务</h2>
+            <p>常用入口放在这里，获取账号前建议先看教程。</p>
+          </div>
           <div class="quick-actions">
             <button class="action-btn" onclick="openTutorial()">
-              <div class="icon-box book-icon">
-                <i class="fas fa-book-open"></i>
-              </div>
+              <span class="icon-box mint"><i class="fas fa-book-open"></i></span>
               <span>新手教程 & QA</span>
             </button>
             <a
@@ -202,186 +222,126 @@
               target="_blank"
               class="action-btn"
             >
-              <div class="icon-box cloud-icon">
-                <i class="fab fa-qq"></i>
-              </div>
+              <span class="icon-box blue"><i class="fab fa-qq"></i></span>
               <span>联系站长</span>
             </a>
           </div>
-        </div>
+        </section>
 
-        <!-- 账号列表区域 -->
-        <h3 class="section-title fade-in-up delay-2">可用账号</h3>
-        <div class="grid-container">
-          <div class="app-card glass-card fade-in-up delay-2">
-            <div class="app-icon icon-blue">
-              <i class="fas fa-user-astronaut"></i>
-            </div>
-            <div class="app-info">
-              <h4>共享账号 ①</h4>
-            </div>
-            <div class="app-actions">
-              <a href="https://appi.lol/" target="_blank" class="btn-sm">
-                获取 <i class="fas fa-chevron-right"></i>
-              </a>
-            </div>
+        <section class="section-block fade-in-up delay-3">
+          <div class="section-head">
+            <h2>可用账号</h2>
+            <p>如果某个入口不可用，请更换列表中的其他账号尝试。</p>
           </div>
+          <div class="account-grid">
+            <article class="account-card card">
+              <div class="account-index">01</div>
+              <div class="account-info">
+                <h3>共享账号 ①</h3>
+                <p>第三方入口</p>
+              </div>
+              <a href="https://appi.lol/" target="_blank" class="btn-sm">获取</a>
+            </article>
 
-          <div class="app-card glass-card fade-in-up delay-3">
-            <div class="app-icon icon-purple">
-              <i class="fas fa-user-ninja"></i>
-            </div>
-            <div class="app-info">
-              <h4>共享账号 ②</h4>
-            </div>
-            <div class="app-actions">
-              <a
-                href="https://idshare001.me/goso.html"
-                target="_blank"
-                class="btn-sm"
-              >
-                获取 <i class="fas fa-chevron-right"></i>
-              </a>
-            </div>
-          </div>
+            <article class="account-card card">
+              <div class="account-index">02</div>
+              <div class="account-info">
+                <h3>共享账号 ②</h3>
+                <p>第三方入口</p>
+              </div>
+              <a href="https://idshare001.me/goso.html" target="_blank" class="btn-sm">获取</a>
+            </article>
 
-          <div class="app-card glass-card fade-in-up delay-4">
-            <div class="app-icon icon-green">
-              <i class="fas fa-user-secret"></i>
-            </div>
-            <div class="app-info">
-              <h4>共享账号 ③</h4>
-            </div>
-            <div class="app-actions">
-              <a
-                href="https://ccbaohe.com/appleID/"
-                target="_blank"
-                class="btn-sm"
-              >
-                获取 <i class="fas fa-chevron-right"></i>
-              </a>
-            </div>
-          </div>
+            <article class="account-card card">
+              <div class="account-index">03</div>
+              <div class="account-info">
+                <h3>共享账号 ③</h3>
+                <p>第三方入口</p>
+              </div>
+              <a href="https://ccbaohe.com/appleID/" target="_blank" class="btn-sm">获取</a>
+            </article>
 
-          <div class="app-card glass-card fade-in-up delay-4">
-            <div class="app-icon icon-orange">
-              <i class="fas fa-user-shield"></i>
-            </div>
-            <div class="app-info">
-              <h4>共享账号 ④</h4>
-            </div>
-            <div class="app-actions">
-              <a
-                href="https://ccbaohe.com/appleID2/"
-                target="_blank"
-                class="btn-sm"
-              >
-                获取 <i class="fas fa-chevron-right"></i>
-              </a>
-            </div>
-          </div>
+            <article class="account-card card">
+              <div class="account-index">04</div>
+              <div class="account-info">
+                <h3>共享账号 ④</h3>
+                <p>第三方入口</p>
+              </div>
+              <a href="https://ccbaohe.com/appleID2/" target="_blank" class="btn-sm">获取</a>
+            </article>
 
-          <div class="app-card glass-card fade-in-up delay-4">
-            <div class="app-icon icon-red">
-              <i class="fas fa-user-tag"></i>
-            </div>
-            <div class="app-info">
-              <h4>共享账号 ⑤</h4>
-            </div>
-            <div class="app-actions">
-              <a href="https://free.iosapp.icu/" target="_blank" class="btn-sm">
-                获取 <i class="fas fa-chevron-right"></i>
-              </a>
-            </div>
-          </div>
+            <article class="account-card card">
+              <div class="account-index">05</div>
+              <div class="account-info">
+                <h3>共享账号 ⑤</h3>
+                <p>第三方入口</p>
+              </div>
+              <a href="https://free.iosapp.icu/" target="_blank" class="btn-sm">获取</a>
+            </article>
 
-          <div class="app-card glass-card fade-in-up delay-4">
-            <div class="app-icon icon-teal">
-              <i class="fas fa-user-check"></i>
-            </div>
-            <div class="app-info">
-              <h4>共享账号 ⑥</h4>
-            </div>
-            <div class="app-actions">
-              <a href="https://ids.ailiao.eu/" target="_blank" class="btn-sm">
-                获取 <i class="fas fa-chevron-right"></i>
-              </a>
-            </div>
+            <article class="account-card card">
+              <div class="account-index">06</div>
+              <div class="account-info">
+                <h3>共享账号 ⑥</h3>
+                <p>第三方入口</p>
+              </div>
+              <a href="https://ids.ailiao.eu/" target="_blank" class="btn-sm">获取</a>
+            </article>
           </div>
-        </div>
+        </section>
 
         <footer class="footer">
           <p>
-            站长QQ: 1287766992
-            <i
-              class="fas fa-copy click-copy"
-              onclick="copyText('1287766992')"
-            ></i>
+            站长 QQ：1287766992
+            <button class="copy-inline" onclick="copyText('1287766992')" aria-label="复制 QQ" title="复制 QQ">
+              <i class="fas fa-copy"></i>
+            </button>
           </p>
-          <p class="copyright">© 2025 Apple ID Share</p>
+          <p>© 2025 Apple ID Share</p>
         </footer>
-      </div>
+      </main>
     </section>
 
-    <!-- 弹窗：二维码 -->
-    <div id="qr-modal" class="modal">
-      <div class="modal-content glass-card">
-        <span class="close-modal" onclick="toggleModal('qr-modal')"
-          >&times;</span
-        >
-        <h3>加入分享群</h3>
-        <p>扫描下方二维码获取密码</p>
-        <img src="dy.jpg" alt="群二维码" class="qr-img" />
+    <div id="qr-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="qr-modal-title">
+      <div class="modal-content card">
+        <button class="close-modal" onclick="toggleModal('qr-modal')" aria-label="关闭">
+          <i class="fas fa-xmark"></i>
+        </button>
+        <h3 id="qr-modal-title">加入分享群</h3>
+        <p>扫描下方二维码获取访问密码</p>
+        <img src="dy.jpg" alt="分享群二维码" class="qr-img" loading="lazy" />
       </div>
     </div>
 
-    <!-- 弹窗：使用教程 & QA -->
-    <div id="tutorial-modal" class="modal">
-      <div class="modal-content glass-card wide-modal">
-        <span class="close-modal" onclick="toggleModal('tutorial-modal')"
-          >&times;</span
-        >
-        <h3>常见问题 Q&A</h3>
+    <div id="tutorial-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="tutorial-modal-title">
+      <div class="modal-content card wide-modal">
+        <button class="close-modal" onclick="toggleModal('tutorial-modal')" aria-label="关闭">
+          <i class="fas fa-xmark"></i>
+        </button>
+        <h3 id="tutorial-modal-title">常见问题 Q&A</h3>
         <div class="qa-list">
-          <div class="qa-item">
-            <div class="qa-q">
-              <i class="fas fa-question-circle"></i> 需要双重认证验证码？
-            </div>
-            <div class="qa-a">
-              说明账号被误开启了双重认证。请点击“其他选项” ->
-              “不升级”，或等待15分钟后重试。
-            </div>
-          </div>
-          <div class="qa-item">
-            <div class="qa-q">
-              <i class="fas fa-question-circle"></i> 提示账号密码错误？
-            </div>
-            <div class="qa-a">
-              请勿复制多余空格。如果是更新APP时提示，请卸载该APP并用新账号重新下载。
-            </div>
-          </div>
-          <div class="qa-item">
-            <div class="qa-q">
-              <i class="fas fa-question-circle"></i> 提示 Apple ID 已锁定？
-            </div>
-            <div class="qa-a">账号触发风控。请更换列表中的其他账号尝试。</div>
-          </div>
-          <div class="qa-item warning">
-            <div class="qa-q">
-              <i class="fas fa-exclamation-circle"></i> 如何卸载重装保留数据？
-            </div>
-            <div class="qa-a">
-              设置 > iPhone储存空间 > 选择应用 > 点击
-              <strong>"卸载App"</strong> (蓝字) > 回到 AppStore 重新安装。
-            </div>
-          </div>
+          <article class="qa-item">
+            <h4><i class="fas fa-question-circle"></i> 需要双重认证验证码？</h4>
+            <p>说明账号被误开启了双重认证。请点击“其他选项” -> “不升级”，或等待 15 分钟后重试。</p>
+          </article>
+          <article class="qa-item">
+            <h4><i class="fas fa-question-circle"></i> 提示账号密码错误？</h4>
+            <p>请勿复制多余空格。如果是更新 App 时提示，请卸载该 App 并用新账号重新下载。</p>
+          </article>
+          <article class="qa-item">
+            <h4><i class="fas fa-question-circle"></i> 提示 Apple ID 已锁定？</h4>
+            <p>账号触发风控。请更换列表中的其他账号尝试。</p>
+          </article>
+          <article class="qa-item danger">
+            <h4><i class="fas fa-exclamation-circle"></i> 如何卸载重装保留数据？</h4>
+            <p>设置 > iPhone 储存空间 > 选择应用 > 点击“卸载 App”蓝字 > 回到 App Store 重新安装。</p>
+          </article>
         </div>
       </div>
     </div>
 
-    <!-- Toast 提示 -->
     <div id="toast" class="toast">
-      <i class="fas fa-check-circle"></i>
+      <i class="fas fa-circle-check"></i>
       <span id="toast-msg">复制成功</span>
     </div>
 
