@@ -46,7 +46,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const CONFIG = {
-    PASSWORD_B64: "ODYxMQ=",
+    PASSWORD_B64: "ODYxMQ==",
     AUTH_KEY: "appleid_share_auth_v1",
     EXPIRE_HOURS: 24,
   };
